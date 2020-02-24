@@ -1,0 +1,22 @@
+
+version: '3'
+
+services:
+  perso:
+    image: nginx:alpine
+    container_name: ${NAME}
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${SERVICE}.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.${SERVICE}.tls=true"
+      - "traefik.http.services.${SERVICE}.loadbalancer.server.port=${PORT}"
+      - "traefik.http.routers.${SERVICE}.entrypoints=https"
+      - "traefik.http.routers.${SERVICE}.tls.certresolver=le"
+      - "traefik.http.routers.${SERVICE}.middlewares=security-headers@file"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
