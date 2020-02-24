@@ -1,0 +1,29 @@
+http:
+   middlewares:
+     https_redirect:
+       redirectScheme:
+         scheme: https
+         permanent: true
+     security-headers:
+       headers:
+         frameDeny: true
+         sslRedirect: true
+         accessControlAllowMethods:
+          - GET
+          - OPTIONS
+          - PUT
+         sTsPreload: true
+         customFrameOptionsValue: SAMEORIGIN
+         accessControlAllowOrigin: origin-list-or-null
+         accessControlMaxAge: 100
+         browserXssFilter: true
+         contentTypeNosniff: true
+         forceSTSHeader: true
+         referrerPolicy: same-origin
+         featurePolicy: vibrate 'self'
+         stsSeconds: 315360000
+         stsIncludeSubdomains: true
+     authTraefik:
+       basicAuth:
+         users:
+           - "user:bcryptPassword" 

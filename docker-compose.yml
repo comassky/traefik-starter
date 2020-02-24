@@ -1,0 +1,35 @@
+version: '3'
+services:
+  traefik:
+    image: traefik:latest
+    container_name: Traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./Traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./tls:/tls:ro
+      - ./acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      # HTTP to HTTPS redirection
+      - "traefik.http.routers.http_catchall.rule= HostRegexp(`{any:.+}`)"
+      - "traefik.http.routers.http_catchall.entrypoints=http"
+      - "traefik.http.routers.http_catchall.middlewares=https_redirect@file"
+
+      # Docker labels for enabling Traefik dashboard
+      - "traefik.http.routers.traefik.rule=Host(`traefik.domain.com`)"
+      - "traefik.http.routers.traefik.entrypoints=https"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=security-headers@file, authTraefik@file"     
+      - "traefik.http.routers.traefik.tls.certresolver=le"
+    environment:
+      - TZ=Europe/Paris
+networks:
+  traefik:
+    external: true
+

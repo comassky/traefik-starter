@@ -1,0 +1,29 @@
+api:
+  dashboard: true
+
+global:
+  sendAnonymousUsage: true
+
+log:
+  level: INFO
+
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    network: "traefik"
+    exposedByDefault: false 
+  file:
+    directory: "/tls/"
+
+certificatesResolvers:
+  le:
+    acme:
+      email: jacquot.hadrien@gmail.com
+      storage: /acme.json
+      tlsChallenge: {}
