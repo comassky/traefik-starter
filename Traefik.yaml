@@ -19,7 +19,7 @@ providers:
     network: "traefik"
     exposedByDefault: false 
   file:
-    directory: "/tls/"
+    directory: "/conf/"
 
 certificatesResolvers:
   le:
