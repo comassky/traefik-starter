@@ -24,6 +24,6 @@ providers:
 certificatesResolvers:
   le:
     acme:
-      email: jacquot.hadrien@gmail.com
+      email: email@gmail.com
       storage: /acme.json
       tlsChallenge: {}
