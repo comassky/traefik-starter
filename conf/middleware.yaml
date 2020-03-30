@@ -8,13 +8,12 @@ http:
        headers:
          frameDeny: true
          sslRedirect: true
-         accessControlAllowMethods:
+         accessControlAllowMethodsList:
           - GET
           - OPTIONS
           - PUT
          sTsPreload: true
          customFrameOptionsValue: SAMEORIGIN
-         accessControlAllowOrigin: origin-list-or-null
          accessControlMaxAge: 100
          browserXssFilter: true
          contentTypeNosniff: true
